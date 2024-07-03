@@ -1,10 +1,11 @@
 import time
 import pyautogui
 import pyperclip
+import RobotDatabase
 
 
-def getMobiles():
-    return ['13802425847', '15002011616']
+def getMobiles(page):
+    return RobotDatabase.getMobiles(0, page * 10)
 
 
 def sendInvite():
@@ -24,29 +25,33 @@ def sendInvite():
 
         pyautogui.leftClick()
 
-        time.sleep(5)
+        time.sleep(3)
 
 
 def addFriend():
     print('点击添加好友按钮')
 
-    add = pyautogui.locateOnScreen('lastadd.png')
-    if add:
-        a_x, a_y = add.left, add.top
-        print(f'图像位于屏幕上的坐标：X={a_x}, Y={a_y}')
+    try:
+        add = pyautogui.locateOnScreen('lastadd.png')
+        if add:
+            a_x, a_y = add.left, add.top
+            print(f'图像位于屏幕上的坐标：X={a_x}, Y={a_y}')
 
-        a_pos_x = a_x // 2
-        a_pos_y = a_y // 2
+            a_pos_x = a_x // 2
+            a_pos_y = a_y // 2
 
-        pyautogui.moveTo(a_pos_x + 25, a_pos_y + 25)
+            pyautogui.moveTo(a_pos_x + 25, a_pos_y + 25)
 
-        time.sleep(1)
+            time.sleep(1)
 
-        pyautogui.leftClick()
+            pyautogui.leftClick()
 
-        time.sleep(1)
+            time.sleep(1)
 
-        sendInvite()
+            sendInvite()
+    except Exception as e:
+        print(e.__cause__.__str__())
+        pass
 
 
 def del_mobile():
@@ -86,7 +91,7 @@ def input_mobile():
 
         time.sleep(1)
 
-        mobiles = getMobiles()
+        mobiles = getMobiles(1)
         for mobile in mobiles:
             print("输入手机号：" + mobile)
 
@@ -100,7 +105,7 @@ def input_mobile():
 
             addFriend()
 
-            time.sleep(10)
+            time.sleep(3)
 
             del_mobile()
 
