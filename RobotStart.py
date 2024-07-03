@@ -1,11 +1,31 @@
 import time
 import pyautogui
 import pyperclip
+
+import RobotConfig
 import RobotDatabase
 
 
 def getMobiles(page):
-    return RobotDatabase.getMobiles(0, page * 10)
+    return RobotDatabase.getMobiles(page * 10, 10)
+
+
+def fillMessage():
+    message = RobotDatabase.getMessage()
+
+    pyautogui.hotkey('command', 'a')
+
+    time.sleep(1)
+
+    pyautogui.press('backspace')
+
+    time.sleep(1)
+
+    pyperclip.copy(message)
+
+    time.sleep(1)
+
+    pyautogui.hotkey('command', 'v')
 
 
 def sendInvite():
@@ -19,7 +39,7 @@ def sendInvite():
         i_pos_x = i_x // 2
         i_pos_y = i_y // 2
 
-        pyautogui.moveTo(i_pos_x + 25, i_pos_y + 25)
+        pyautogui.moveTo(i_pos_x + 28, i_pos_y + 25)
 
         time.sleep(1)
 
@@ -32,19 +52,25 @@ def addFriend():
     print('点击添加好友按钮')
 
     try:
+        wechat = pyautogui.locateOnScreen('wechat.png')
         add = pyautogui.locateOnScreen('lastadd.png')
-        if add:
-            a_x, a_y = add.left, add.top
+        if add and wechat:
+            a_y = wechat.top
+            a_x = add.left
             print(f'图像位于屏幕上的坐标：X={a_x}, Y={a_y}')
 
             a_pos_x = a_x // 2
             a_pos_y = a_y // 2
 
-            pyautogui.moveTo(a_pos_x + 25, a_pos_y + 25)
+            pyautogui.moveTo(a_pos_x + 28, a_pos_y + 25)
 
             time.sleep(1)
 
             pyautogui.leftClick()
+
+            time.sleep(1)
+
+            fillMessage()
 
             time.sleep(1)
 
@@ -91,7 +117,7 @@ def input_mobile():
 
         time.sleep(1)
 
-        mobiles = getMobiles(1)
+        mobiles = getMobiles(RobotConfig.robotConfig['robot']['db']['page'])
         for mobile in mobiles:
             print("输入手机号：" + mobile)
 
@@ -101,7 +127,7 @@ def input_mobile():
 
             pyautogui.press('enter')
 
-            time.sleep(1)
+            time.sleep(3)
 
             addFriend()
 
@@ -189,7 +215,7 @@ if __name__ == '__main__':
 
     pyautogui.press('enter')
 
-    time.sleep(1)
+    time.sleep(3)
 
     locate_org()
 
