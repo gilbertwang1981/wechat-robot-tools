@@ -45,7 +45,7 @@ def sendInvite():
 
         pyautogui.leftClick()
 
-        time.sleep(3)
+        time.sleep(2)
 
 
 def addFriend():
@@ -215,7 +215,7 @@ if __name__ == '__main__':
 
     pyautogui.press('enter')
 
-    time.sleep(3)
+    time.sleep(1)
 
     locate_org()
 

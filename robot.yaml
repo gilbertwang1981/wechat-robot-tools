@@ -5,4 +5,4 @@ robot:
     user: root
     pass: KPqazxsw
     dbName: kp_sk_sync
-    page: 2
+    page: 0
